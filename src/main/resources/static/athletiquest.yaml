@@ -1,0 +1,40 @@
+openapi: 3.0.3
+info:
+  title: AthletiQuest
+  description: API AthletiQuest
+  version: 1.0.0
+
+paths:
+  /stadiums:
+    get:
+      operationId: listStadium
+      responses:
+        200:
+          description: the list of stadiums
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'model.yaml#/components/schemas/Stadium'
+        400:
+          description: Error 400
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: 'model.yaml#/components/schemas/ErrorResponse'
+        401:
+          description: Error 401
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: 'model.yaml#/components/schemas/ErrorResponse'
+        500:
+          description: Error 500
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: 'model.yaml#/components/schemas/ErrorResponse'
