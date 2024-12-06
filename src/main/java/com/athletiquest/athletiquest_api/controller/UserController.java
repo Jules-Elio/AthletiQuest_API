@@ -10,30 +10,30 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserService userService;
+    private final UserService service;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserService service) {
+        this.service = service;
     }
 
 
     @GetMapping()
     public List<User> getUsers() {
-        return userService.findAll();
+        return service.findAll();
     }
 
     @GetMapping("/{userId}")
     public User getUser(@PathVariable String userId) {
-        return userService.findById(userId);
+        return service.findById(userId);
     }
 
     @PostMapping("/save")
     public User saveUser(@RequestBody User user) {
-        return userService.save(user);
+        return service.save(user);
     }
 
     @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable String userId) {
-        userService.delete(userId);
+        service.delete(userId);
     }
 }

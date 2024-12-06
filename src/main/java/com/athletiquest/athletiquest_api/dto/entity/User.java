@@ -2,6 +2,7 @@ package com.athletiquest.athletiquest_api.dto.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -31,13 +33,4 @@ public class User {
     private String location;
 
     private String bio;
-
-    public User() {
-    }
-
-    public User(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-    }
 }

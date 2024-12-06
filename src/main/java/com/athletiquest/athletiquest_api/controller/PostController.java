@@ -10,30 +10,30 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController {
 
-    private final PostService postService;
+    private final PostService service;
 
-    public PostController(PostService postService) {
-        this.postService = postService;
+    public PostController(PostService service) {
+        this.service = service;
     }
 
 
     @GetMapping()
     public List<Post> getPosts() {
-        return postService.findAll();
+        return service.findAll();
     }
 
     @GetMapping("/{postId}")
     public Post getPost(@PathVariable Long postId) {
-        return postService.findById(postId);
+        return service.findById(postId);
     }
 
     @PostMapping("/add")
     public Post addPost(@RequestBody Post post) {
-        return postService.save(post);
+        return service.save(post);
     }
 
     @DeleteMapping("/{postId}")
     public void deletePost(@PathVariable Long postId) {
-        postService.delete(postId);
+        service.delete(postId);
     }
 }
