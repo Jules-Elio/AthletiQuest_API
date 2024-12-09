@@ -2,11 +2,11 @@ package com.athletiquest.athletiquest_api.dto.service;
 
 import com.athletiquest.athletiquest_api.dto.entity.Post;
 import com.athletiquest.athletiquest_api.dto.repository.PostRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class PostService {
 
     private final PostRepository postRepository;

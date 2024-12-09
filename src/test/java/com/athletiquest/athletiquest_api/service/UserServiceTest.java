@@ -54,6 +54,32 @@ class UserServiceTest {
     }
 
     @Test
+    void getUserByUsername_found() {
+        User user = new User();
+        when(userRepository.findByUsername("Username")).thenReturn(user);
+        assertThat(userService.findByUsername("Username")).isEqualTo(user);
+    }
+
+    @Test
+    void getUserByUsername_notFound() {
+        when(userRepository.findByUsername("Username")).thenReturn(null);
+        assertThat(userService.findByUsername("Username")).isNull();
+    }
+
+    @Test
+    void getUserByEmail_found() {
+        User user = new User();
+        when(userRepository.findByEmail("name@mail.com")).thenReturn(user);
+        assertThat(userService.findByEmail("name@mail.com")).isEqualTo(user);
+    }
+
+    @Test
+    void getUserByEmail_notFound() {
+        when(userRepository.findByEmail("name@mail.com")).thenReturn(null);
+        assertThat(userService.findByEmail("name@mail.com")).isNull();
+    }
+
+    @Test
     void saveUser() {
         User user = new User();
         when(userRepository.save(user)).thenReturn(user);

@@ -27,34 +27,34 @@ class PostServiceTest {
 
 
     @Test
-    void getAllUsers_noUser() {
+    void getAllPosts_noPost() {
         List<Post> posts = List.of();
         when(postRepository.findAll()).thenReturn(posts);
         assertThat(postService.findAll()).isEmpty();
     }
 
     @Test
-    void getAllUsers_oneUser() {
+    void getAllPosts_onePost() {
         List<Post> posts = List.of(new Post());
         when(postRepository.findAll()).thenReturn(posts);
         assertThat(postService.findAll()).hasSize(1);
     }
 
     @Test
-    void getUserById_found() {
+    void getPostById_found() {
         Post post = new Post();
         when(postRepository.findById(1L)).thenReturn(Optional.of(post));
         assertThat(postService.findById(1L)).isEqualTo(post);
     }
 
     @Test
-    void getUserById_notFound() {
+    void getPostById_notFound() {
         when(postRepository.findById(1L)).thenReturn(Optional.empty());
         assertThat(postService.findById(1L)).isNull();
     }
 
     @Test
-    void saveUser() {
+    void savePost() {
         Post post = new Post();
         when(postRepository.save(post)).thenReturn(post);
         assertThat(postService.save(post)).isEqualTo(post);
@@ -62,7 +62,7 @@ class PostServiceTest {
     }
 
     @Test
-    void deleteUser() {
+    void deletePost() {
         postService.delete(1L);
         verify(postRepository).deleteById(1L);
     }

@@ -2,11 +2,11 @@ package com.athletiquest.athletiquest_api.dto.service;
 
 import com.athletiquest.athletiquest_api.dto.entity.User;
 import com.athletiquest.athletiquest_api.dto.repository.UserRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class UserService {
 
     private final UserRepository userRepository;
@@ -21,6 +21,14 @@ public class UserService {
 
     public User findById(String id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public User save(User user) {
