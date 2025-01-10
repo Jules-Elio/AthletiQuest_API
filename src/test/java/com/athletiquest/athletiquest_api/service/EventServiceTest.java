@@ -54,6 +54,22 @@ class EventServiceTest {
     }
 
     @Test
+    void getEventsByName_found() {
+        Event event = new Event();
+        List<Event> events = List.of(event);
+        when(eventRepository.findByNameContainingIgnoreCase("Tes")).thenReturn(events);
+        assertThat(eventService.searchByName("Tes")).isEqualTo(events);
+    }
+
+    @Test
+    void getEventsByName_notFound() {
+        Event event = new Event();
+        List<Event> events = List.of(event);
+        when(eventRepository.findByNameContainingIgnoreCase("NotTest")).thenReturn(List.of());
+        assertThat(eventService.searchByName("NotTest")).isNotEqualTo(events);
+    }
+
+    @Test
     void saveEvent() {
         Event event = new Event();
         when(eventRepository.save(event)).thenReturn(event);
