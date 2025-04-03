@@ -35,7 +35,7 @@ jobs:
 
       - name: Build Docker
         run: |
-          docker build -f backend/Dockerfile -t ${{ steps.extract.outputs.image_name }}:latest .
+          docker build -f Dockerfile -t ${{ steps.extract.outputs.image_name }}:latest .
 
       - name: Push Docker image
         run: |
