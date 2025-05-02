@@ -26,9 +26,9 @@ public class StatisticController {
         return service.findAll();
     }
 
-    @GetMapping("/{postId}")
-    public Statistic getStatistic(@PathVariable Long postId) {
-        return service.findById(postId);
+    @GetMapping("/{statisticId}")
+    public Statistic getStatistic(@PathVariable Long statisticId) {
+        return service.findById(statisticId);
     }
 
     @GetMapping("/{username}")
@@ -38,13 +38,13 @@ public class StatisticController {
     }
 
     @PostMapping("/add")
-    public Statistic addStatistic(@RequestBody Statistic post) {
-        return service.save(post);
+    public Statistic addStatistic(@RequestBody Statistic statistic) {
+        return service.save(statistic);
     }
 
-    @DeleteMapping("/{postId}")
-    public void deleteStatistic(@PathVariable Long postId) {
-        service.delete(postId);
+    @DeleteMapping("/{statisticId}")
+    public void deleteStatistic(@PathVariable Long statisticId) {
+        service.delete(statisticId);
     }
 
 }
