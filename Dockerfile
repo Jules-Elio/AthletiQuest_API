@@ -1,4 +1,4 @@
-FROM amazoncorretto:23-alpine-jdk
+FROM amazoncorretto:24-alpine-jdk
 
 LABEL authors="Sclus"
 
