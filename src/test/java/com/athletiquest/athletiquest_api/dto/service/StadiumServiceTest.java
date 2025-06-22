@@ -6,11 +6,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -18,7 +16,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles("test")
 class StadiumServiceTest {
@@ -35,7 +32,7 @@ class StadiumServiceTest {
         mapper.registerModule(module);
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(requestPath, String.class);
-        assert response != null;
+        assertNotNull(response);
         String toRead = response.substring(0, response.length() - 1).replaceFirst("\\{\"total_count\": \\d*, \"results\": ", "");
         List<Stadium> testList = mapper.readValue(toRead, new TypeReference<>() {
         });

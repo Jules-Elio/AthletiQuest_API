@@ -1,8 +1,7 @@
-package com.athletiquest.athletiquest_api.service;
+package com.athletiquest.athletiquest_api.dto.service;
 
 import com.athletiquest.athletiquest_api.dto.entity.Post;
 import com.athletiquest.athletiquest_api.dto.repository.PostRepository;
-import com.athletiquest.athletiquest_api.dto.service.PostService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
