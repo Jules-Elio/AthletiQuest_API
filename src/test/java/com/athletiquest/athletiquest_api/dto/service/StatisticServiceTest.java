@@ -1,9 +1,8 @@
-package com.athletiquest.athletiquest_api.service;
+package com.athletiquest.athletiquest_api.dto.service;
 
 import com.athletiquest.athletiquest_api.dto.entity.Statistic;
 import com.athletiquest.athletiquest_api.dto.entity.User;
 import com.athletiquest.athletiquest_api.dto.repository.StatisticRepository;
-import com.athletiquest.athletiquest_api.dto.service.StatisticService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -60,7 +59,7 @@ class StatisticServiceTest {
         User user = new User();
 
         when(statisticRepository.findByUser(user)).thenReturn(statistic);
-        assertThat(statisticService.findByUsername(user)).isEqualTo(statistic);
+        assertThat(statisticService.findByUser(user)).isEqualTo(statistic);
     }
 
     @Test
@@ -69,7 +68,7 @@ class StatisticServiceTest {
         User user = new User();
 
         when(statisticRepository.findByUser(user)).thenReturn(null);
-        assertThat(statisticService.findByUsername(user)).isNotEqualTo(statistic);
+        assertThat(statisticService.findByUser(user)).isNotEqualTo(statistic);
     }
 
     @Test

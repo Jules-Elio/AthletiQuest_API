@@ -2,18 +2,16 @@ package com.athletiquest.athletiquest_api.dto.service;
 
 import com.athletiquest.athletiquest_api.dto.entity.Event;
 import com.athletiquest.athletiquest_api.dto.repository.EventRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EventService {
 
     private final EventRepository eventRepository;
-
-    public EventService(EventRepository eventRepository) {
-        this.eventRepository = eventRepository;
-    }
 
     public List<Event> findAll() {
         return eventRepository.findAll();

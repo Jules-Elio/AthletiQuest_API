@@ -2,18 +2,16 @@ package com.athletiquest.athletiquest_api.dto.service;
 
 import com.athletiquest.athletiquest_api.dto.entity.Post;
 import com.athletiquest.athletiquest_api.dto.repository.PostRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;
-
-    public PostService(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
 
     public List<Post> findAll() {
         return postRepository.findAll();
