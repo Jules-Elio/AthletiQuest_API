@@ -44,6 +44,5 @@ public class Stadium {
             String latitude = nullSafeValue(tree.get("equip_x"), String.class);
             return new Stadium(id, name, description, freeAccess, new GeoJsonPoint(Double.parseDouble(longitude), Double.parseDouble(latitude)));
         }
-
     }
 }
