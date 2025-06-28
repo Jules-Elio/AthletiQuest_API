@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Profile;
 public class AthletiquestApiApplication {
 
 
-	public static void main(String[] args) {
-		SpringApplication.run(AthletiquestApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AthletiquestApiApplication.class, args);
+    }
 }
