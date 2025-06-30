@@ -1,9 +1,9 @@
 package com.athletiquest.athletiquest_api.controller;
 
-import com.athletiquest.athletiquest_api.StadiumsRequest;
-import com.athletiquest.athletiquest_api.StadiumsResponse;
 import com.athletiquest.athletiquest_api.dto.entity.Stadium;
 import com.athletiquest.athletiquest_api.dto.service.StadiumService;
+import com.athletiquest.athletiquest_api.utils.StadiumsRequest;
+import com.athletiquest.athletiquest_api.utils.StadiumsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

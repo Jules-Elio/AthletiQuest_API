@@ -1,4 +1,4 @@
-package com.athletiquest.athletiquest_api;
+package com.athletiquest.athletiquest_api.utils;
 
 import com.athletiquest.athletiquest_api.dto.entity.Stadium;
 import lombok.Getter;

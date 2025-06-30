@@ -1,4 +1,4 @@
-package com.athletiquest.athletiquest_api;
+package com.athletiquest.athletiquest_api.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

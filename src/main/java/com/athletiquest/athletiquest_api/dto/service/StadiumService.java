@@ -1,9 +1,11 @@
 package com.athletiquest.athletiquest_api.dto.service;
 
 
-import com.athletiquest.athletiquest_api.StadiumsRequest;
 import com.athletiquest.athletiquest_api.dto.entity.Stadium;
+import com.athletiquest.athletiquest_api.dto.entity.StadiumsUpdate;
 import com.athletiquest.athletiquest_api.dto.repository.StadiumRepository;
+import com.athletiquest.athletiquest_api.dto.repository.StadiumsUpdateRepository;
+import com.athletiquest.athletiquest_api.utils.StadiumsRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +25,7 @@ import java.util.List;
 public class StadiumService {
 
     private final StadiumRepository stadiumRepository;
+    private final StadiumsUpdateRepository stadiumsUpdateRepository;
 
     @Value("${api-gouv.stadiums.request-path}")
     private String requestPath;
@@ -52,6 +55,7 @@ public class StadiumService {
             stadiumListResult.addAll(readValues);
             offset += 100;
         }
+        stadiumsUpdateRepository.save(new StadiumsUpdate());
         return stadiumRepository.saveAll(stadiumListResult).size() == stadiumListResult.size();
     }
 
