@@ -26,12 +26,16 @@ public class Event {
     @Column(nullable = false)
     private String location;
 
+    private Double latitude;
+    private Double longitude;
+
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private Date createdAt = new Date();
 
     @ManyToOne
     @JoinColumn(name = "owner_id")

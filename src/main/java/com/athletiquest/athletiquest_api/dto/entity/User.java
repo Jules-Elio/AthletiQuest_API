@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -33,4 +34,7 @@ public class User {
     private String location;
 
     private String bio;
+
+    @ManyToMany
+    private List<User> follows;
 }
