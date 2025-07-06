@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ActiveProfiles("test")
 class StadiumServiceTest {
 
-    @Value("${api.gouv.stadiums.request.path}")
+    @Value("${api-gouv.stadiums.request-path}")
     private String requestPath;
 
 
