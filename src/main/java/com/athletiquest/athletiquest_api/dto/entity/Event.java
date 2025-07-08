@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.locationtech.jts.geom.Point;
 
 import java.util.Date;
 import java.util.List;
@@ -26,8 +27,7 @@ public class Event {
     @Column(nullable = false)
     private String location;
 
-    private Double latitude;
-    private Double longitude;
+    private Point coordinates;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

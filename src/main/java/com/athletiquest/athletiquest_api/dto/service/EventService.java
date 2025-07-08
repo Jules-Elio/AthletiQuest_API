@@ -25,6 +25,10 @@ public class EventService {
         return eventRepository.findByNameContainingIgnoreCase(name);
     }
 
+    public List<Event> searchByLocation(Double longitude, Double latitude, Double radius) {
+        return eventRepository.findWithinDistance(longitude, latitude, radius);
+    }
+
     public Event save(Event event) {
         return eventRepository.save(event);
     }

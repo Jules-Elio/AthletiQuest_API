@@ -1,10 +1,14 @@
 FROM amazoncorretto:24-alpine-jdk
 
+RUN addgroup -S spring && adduser -S spring -G spring
+
+USER spring:spring
+
 LABEL authors="Sclus"
 
 VOLUME /tmp
 
-COPY ./target/athletiquest-api-0.0.1-SNAPSHOT.jar athletiquest-api.jar
+COPY ./target/*.jar athletiquest-api.jar
 
 EXPOSE 8080
 
