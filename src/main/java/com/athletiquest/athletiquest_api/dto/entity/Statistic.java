@@ -23,6 +23,6 @@ public class Statistic {
     private BigDecimal totalDistance;
 
     @OneToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_account")
     private User user;
 }
