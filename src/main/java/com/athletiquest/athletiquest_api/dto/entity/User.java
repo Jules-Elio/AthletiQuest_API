@@ -1,12 +1,15 @@
 package com.athletiquest.athletiquest_api.dto.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "user_account")
 @Getter
@@ -21,7 +24,12 @@ public class User {
     @Column(nullable = false)
     private String username;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<Role> roles = new HashSet<>();
+
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)
@@ -29,9 +37,7 @@ public class User {
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date joinDate;
-
-    private String location;
+    private Date joinDate = new Date();
 
     private String bio;
 

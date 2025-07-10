@@ -54,9 +54,9 @@ class UserServiceTest {
 
     @Test
     void getUserByUsername_found() {
-        User user = new User();
-        when(userRepository.findByUsername("Username")).thenReturn(user);
-        assertThat(userService.findByUsername("Username")).isEqualTo(user);
+        List<User> users = List.of(new User());
+        when(userRepository.findByUsername("Username")).thenReturn(users);
+        assertThat(userService.findByUsername("Username")).isEqualTo(users);
     }
 
     @Test

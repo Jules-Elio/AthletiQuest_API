@@ -69,7 +69,7 @@ public class EventController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Event> addEvent(@RequestBody Event event) {
+    public ResponseEntity<Event> saveEvent(@RequestBody Event event) {
         Event result;
         try {
             result = service.save(event);
