@@ -38,8 +38,8 @@ public class PostController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Post> addPost(@RequestBody Post post) {
+    @PostMapping("/save")
+    public ResponseEntity<Post> savePost(@RequestBody Post post) {
         Post result;
         try {
             result = service.save(post);

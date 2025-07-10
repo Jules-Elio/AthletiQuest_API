@@ -33,9 +33,11 @@ class StadiumServiceTest {
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(requestPath, String.class);
         assertNotNull(response);
-        String toRead = response.substring(0, response.length() - 1).replaceFirst("\\{\"total_count\": \\d*, \"results\": ", "");
-        List<Stadium> testList = mapper.readValue(toRead, new TypeReference<>() {
-        });
+        String toRead = response.substring(0, response.length() - 1)
+                                .replaceFirst("\\{\"total_count\": \\d*, \"results\": ", "");
+        List<Stadium> testList = mapper.readValue(
+                toRead, new TypeReference<>() {
+                });
         assertFalse(testList.isEmpty());
 
         testList.forEach(stadium -> {

@@ -25,7 +25,7 @@ public class Event {
     private String description;
 
     @Column(nullable = false)
-    private String location;
+    private String address;
 
     private Point coordinates;
 

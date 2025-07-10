@@ -41,9 +41,9 @@ public class StatisticController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<Statistic> getStatisticByUsername(@PathVariable String username) {
-        User user = userService.findByUsername(username);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Statistic> getStatisticForUserId(@PathVariable String userId) {
+        User user = userService.findById(userId);
         Statistic result;
         try {
             result = service.findByUser(user);
@@ -53,8 +53,8 @@ public class StatisticController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Statistic> addStatistic(@RequestBody Statistic statistic) {
+    @PostMapping("/save")
+    public ResponseEntity<Statistic> saveStatistic(@RequestBody Statistic statistic) {
         Statistic result;
         try {
             result = service.save(statistic);
