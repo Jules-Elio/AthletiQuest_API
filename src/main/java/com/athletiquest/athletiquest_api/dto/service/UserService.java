@@ -1,6 +1,6 @@
 package com.athletiquest.athletiquest_api.dto.service;
 
-import com.athletiquest.athletiquest_api.auth.JwtTokenProvider;
+import com.athletiquest.athletiquest_api.auth.JwtProvider;
 import com.athletiquest.athletiquest_api.dto.entity.User;
 import com.athletiquest.athletiquest_api.dto.repository.RoleRepository;
 import com.athletiquest.athletiquest_api.dto.repository.UserRepository;
@@ -27,7 +27,7 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtProvider jwtProvider;
 
     public String login(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -36,7 +36,7 @@ public class UserService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return jwtTokenProvider.generateToken(authentication);
+        return jwtProvider.generateToken(authentication);
     }
 
     public String signUp(SignUpRequest signUpRequest) {

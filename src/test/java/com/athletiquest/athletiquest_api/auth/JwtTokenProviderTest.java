@@ -18,13 +18,13 @@ class JwtTokenProviderTest {
 
     @Test
     void testTokenGeneration() {
-        JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
+        JwtProvider jwtProvider = new JwtProvider();
         Authentication authentication = Mockito.mock(Authentication.class);
-        when(authentication.getName()).thenReturn("athletiquest@mail.test");
+        when(authentication.getName()).thenReturn("athletiquest@mail.com");
 
-        String token = jwtTokenProvider.generateToken(authentication);
+        String token = jwtProvider.generateToken(authentication);
         assertNotNull(token);
-        assertEquals("athletiquest@mail.test", jwtTokenProvider.getUserEmail(token));
+        assertEquals("athletiquest@mail.test", jwtProvider.getUserEmail(token));
     }
 
 }

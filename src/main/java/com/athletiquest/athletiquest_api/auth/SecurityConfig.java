@@ -35,12 +35,10 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorize -> {
-            authorize.requestMatchers("/stadiums/retrieve").hasAuthority(ADMIN);
+            authorize.requestMatchers("/stadiums/retrieve", "/stadiums/updates").hasAuthority(ADMIN);
             authorize.requestMatchers("/login", "/register", "/stadiums", "/stadiums/*").permitAll();
             authorize.requestMatchers("/*/current").hasAnyAuthority(ADMIN, USER);
             authorize.requestMatchers(HttpMethod.DELETE).hasAuthority(ADMIN);
-            authorize.requestMatchers(HttpMethod.GET).hasAnyAuthority(ADMIN, USER);
-            authorize.requestMatchers(HttpMethod.POST).hasAnyAuthority(ADMIN, USER);
             authorize.anyRequest().hasAnyAuthority(ADMIN, USER);
         }).httpBasic(Customizer.withDefaults());
 

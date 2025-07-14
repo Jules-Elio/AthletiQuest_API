@@ -16,4 +16,9 @@ import java.util.Date;
 public class StadiumsUpdate {
 
     private Date date = new Date();
+    private int numberOfStadiums;
+
+    public StadiumsUpdate(int numberOfStadiums) {
+        this.numberOfStadiums = numberOfStadiums;
+    }
 }

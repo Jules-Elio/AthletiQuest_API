@@ -12,7 +12,7 @@ import java.util.Base64;
 import java.util.Date;
 
 @Component
-public class JwtTokenProvider {
+public class JwtProvider {
 
     private static final long JWT_EXPIRATION_DATE = 3600000; //1h in milliseconds
     private final String jwtSecret = generateSecretKey();

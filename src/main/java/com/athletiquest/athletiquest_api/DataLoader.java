@@ -29,7 +29,7 @@ public class DataLoader implements CommandLineRunner {
     private Boolean retrieveStadiumsOnStartIfCollectionEmpty;
 
     @Override
-    public void run(String... args) throws JsonProcessingException {
+    public void run(String... args) {
         ensureRoleTypes();
         updateStadiums();
     }
@@ -37,23 +37,29 @@ public class DataLoader implements CommandLineRunner {
     private void ensureRoleTypes() {
         for (RoleType roleType : RoleType.values()) {
             Role entity = new Role(roleType);
+            log.atInfo().log("Role type {}", roleType);
             if (roleRepository.findByRoleType(roleType) == null) {
                 roleRepository.save(entity);
+                log.atInfo().log("Role type {} added successfully", roleType);
+            }
+            else {
+                log.atInfo().log("Role type {} already exists", roleType);
             }
         }
     }
 
-    private void updateStadiums() throws JsonProcessingException {
+    private void updateStadiums() {
         if ((Boolean.TRUE.equals(retrieveStadiumsOnStartIfCollectionEmpty) && stadiumService.getStadiumsCount() == 0) ||
             (retrieveStadiumsOnStartIfDaysSinceLastUpdate != null &&
              stadiumsUpdateService.isLastUpdateBeforeXDays(retrieveStadiumsOnStartIfDaysSinceLastUpdate)) ||
             Boolean.TRUE.equals(retrieveStadiumsOnStart)) {
             log.atInfo().log("Updating stadiums into MongoDB");
-
-            if (stadiumService.retrieveStadiumsFromGouvAPI()) {
+            try {
+                stadiumService.retrieveStadiumsFromGouvAPI();
                 log.atInfo().log("Stadiums in MongoDB updated");
-            } else {
+            } catch (JsonProcessingException e) {
                 log.atError().log("Error updating stadiums into MongoDB");
+                log.atError().log(e.getMessage());
             }
         }
     }
