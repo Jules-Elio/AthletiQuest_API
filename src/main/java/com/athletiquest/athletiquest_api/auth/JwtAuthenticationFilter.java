@@ -22,7 +22,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtProvider jwtProvider;
     private final UserDetailsService userDetailsService;
 
     @Override
@@ -34,8 +34,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = getTokenFromRequest(request);
 
-        if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
-            String userEmail = jwtTokenProvider.getUserEmail(token);
+        if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
+            String userEmail = jwtProvider.getUserEmail(token);
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(

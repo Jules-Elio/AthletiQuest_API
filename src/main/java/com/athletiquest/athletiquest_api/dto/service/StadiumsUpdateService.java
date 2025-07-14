@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -22,6 +23,10 @@ public class StadiumsUpdateService {
 
         StadiumsUpdate lastUpdate = stadiumsUpdateRepository.findFirstByDateAfter(date);
         return lastUpdate == null;
+    }
+
+    public List<StadiumsUpdate> getStadiumsUpdates() {
+        return stadiumsUpdateRepository.findAll();
     }
 
 }

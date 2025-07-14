@@ -30,7 +30,7 @@ public class StadiumService {
     @Value("${api-gouv.stadiums.request-path}")
     private String requestPath;
 
-    public boolean retrieveStadiumsFromGouvAPI() throws JsonProcessingException {
+    public void retrieveStadiumsFromGouvAPI() throws JsonProcessingException {
         int offset = 0;
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
@@ -55,8 +55,8 @@ public class StadiumService {
             stadiumListResult.addAll(readValues);
             offset += 100;
         }
-        stadiumsUpdateRepository.save(new StadiumsUpdate());
-        return stadiumRepository.saveAll(stadiumListResult).size() == stadiumListResult.size();
+        stadiumRepository.saveAll(stadiumListResult);
+        stadiumsUpdateRepository.save(new StadiumsUpdate(stadiumListResult.size()));
     }
 
     public int getStadiumsCount() {

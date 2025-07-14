@@ -56,8 +56,8 @@ public class Stadium {
             String name = tree.get("inst_nom").asText("");
             String description = nullSafeValue(tree.get("equip_type_name"), String.class);
             String freeAccess = tree.get("equip_acc_libre").asText("");
-            String longitude = nullSafeValue(tree.get("equip_y"), String.class);
-            String latitude = nullSafeValue(tree.get("equip_x"), String.class);
+            String longitude = nullSafeValue(tree.get("equip_x"), String.class);
+            String latitude = nullSafeValue(tree.get("equip_y"), String.class);
             String city = nullSafeValue(tree.get("new_name"), String.class);
             String postalCode = nullSafeValue(tree.get("inst_cp"), String.class);
             String codeInsee = nullSafeValue(tree.get("new_code"), String.class);
