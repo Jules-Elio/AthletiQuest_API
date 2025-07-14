@@ -70,6 +70,28 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/{userId}/follow")
+    public ResponseEntity<User> followUser(@PathVariable String userId) {
+        User result;
+        try {
+            result = service.followUser(userId);
+        } catch (Exception _) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/{userId}/unfollow")
+    public ResponseEntity<User> unfollowUser(@PathVariable String userId) {
+        User result;
+        try {
+            result = service.unfollowUser(userId);
+        } catch (Exception _) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping("/save")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         User result;

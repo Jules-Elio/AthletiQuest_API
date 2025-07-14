@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity(name = "user_account")
@@ -42,5 +41,5 @@ public class User {
     private String bio;
 
     @ManyToMany
-    private List<User> follows;
+    private Set<User> follows;
 }
