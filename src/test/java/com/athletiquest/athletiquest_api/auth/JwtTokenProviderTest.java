@@ -24,7 +24,7 @@ class JwtTokenProviderTest {
 
         String token = jwtProvider.generateToken(authentication);
         assertNotNull(token);
-        assertEquals("athletiquest@mail.test", jwtProvider.getUserEmail(token));
+        assertEquals("athletiquest@mail.com", jwtProvider.getUserEmail(token));
     }
 
 }
