@@ -36,7 +36,7 @@ public class SecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorize -> {
             authorize.requestMatchers("/stadiums/retrieve", "/stadiums/updates").hasAuthority(ADMIN);
-            authorize.requestMatchers("/login", "/register", "/stadiums", "/stadiums/*").permitAll();
+            authorize.requestMatchers("/login", "/register", "/stadiums", "/stadiums/*", "/events").permitAll();
             authorize.requestMatchers("/*/current").hasAnyAuthority(ADMIN, USER);
             authorize.requestMatchers(HttpMethod.DELETE).hasAuthority(ADMIN);
             authorize.anyRequest().hasAnyAuthority(ADMIN, USER);

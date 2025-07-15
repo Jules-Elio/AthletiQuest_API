@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -31,5 +32,5 @@ public class Post {
 
     @ManyToMany
     @JoinTable(name = "user_post_likes")
-    private List<User> likes;
+    private Set<User> likes = new HashSet<>();
 }

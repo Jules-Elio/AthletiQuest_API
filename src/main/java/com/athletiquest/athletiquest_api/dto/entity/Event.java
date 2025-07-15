@@ -7,7 +7,8 @@ import lombok.Setter;
 import org.locationtech.jts.geom.Point;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -43,7 +44,7 @@ public class Event {
 
     @ManyToMany
     @JoinTable(name = "user_event_participates")
-    private List<User> participants;
+    private Set<User> participants = new HashSet<>();
 
 }
 

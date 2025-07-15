@@ -41,8 +41,7 @@ public class DataLoader implements CommandLineRunner {
             if (roleRepository.findByRoleType(roleType) == null) {
                 roleRepository.save(entity);
                 log.atInfo().log("Role type {} added successfully", roleType);
-            }
-            else {
+            } else {
                 log.atInfo().log("Role type {} already exists", roleType);
             }
         }
