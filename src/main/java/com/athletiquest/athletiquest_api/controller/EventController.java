@@ -2,7 +2,7 @@ package com.athletiquest.athletiquest_api.controller;
 
 import com.athletiquest.athletiquest_api.dto.entity.Event;
 import com.athletiquest.athletiquest_api.dto.service.EventService;
-import com.athletiquest.athletiquest_api.utils.LocationRequest;
+import com.athletiquest.athletiquest_api.utils.EventsRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +19,21 @@ public class EventController {
 
     private final EventService service;
 
+
     @GetMapping()
-    public ResponseEntity<List<Event>> getEvents() {
+    public ResponseEntity<List<Event>> getEvents(@RequestBody EventsRequest request) {
         List<Event> result;
         try {
-            result = service.findAll();
+            if (request.isEmpty()) {
+                result = service.findAll();
+            } else if (request.validCoordinates()) {
+                result = service.searchByLocation(
+                        request.getLongitude(),
+                        request.getLatitude(),
+                        request.validRadius() ? request.getSearchRadius() : 5000);
+            } else {
+                result = new ArrayList<>();
+            }
         } catch (Exception _) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -39,33 +49,6 @@ public class EventController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    @GetMapping("/{eventName}")
-    public ResponseEntity<List<Event>> getEvents(@PathVariable String eventName) {
-        List<Event> result;
-        try {
-            result = service.searchByName(eventName);
-        } catch (Exception _) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    @GetMapping("/near")
-    public ResponseEntity<List<Event>> getEventsByLocation(@RequestBody LocationRequest request) {
-        List<Event> response = new ArrayList<>();
-        try {
-            if (!request.isEmpty()) {
-                response.addAll(service.searchByLocation(
-                        request.getLongitude(),
-                        request.getLatitude(),
-                        request.validRadius() ? request.getSearchRadius() : 5000));
-            }
-        } catch (Exception _) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/save")
@@ -87,6 +70,28 @@ public class EventController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/{eventId}/signup")
+    public ResponseEntity<Event> signUpToEvent(@PathVariable Long eventId) {
+        Event result;
+        try {
+            result = service.signUp(service.findById(eventId));
+        } catch (Exception _) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/{eventId}/signout")
+    public ResponseEntity<Event> signOutFromEvent(@PathVariable Long eventId) {
+        Event result;
+        try {
+            result = service.signOut(service.findById(eventId));
+        } catch (Exception _) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

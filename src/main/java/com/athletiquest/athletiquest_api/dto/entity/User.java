@@ -41,5 +41,5 @@ public class User {
     private String bio;
 
     @ManyToMany
-    private Set<User> follows;
+    private Set<User> follows = new HashSet<>();
 }
