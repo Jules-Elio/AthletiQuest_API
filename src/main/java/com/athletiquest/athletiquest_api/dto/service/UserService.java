@@ -75,6 +75,26 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public User followUser(String userToFollowId) {
+        User currentUser = getCurrentUser();
+        User userToFollow = findById(userToFollowId);
+        if (userToFollow != null) {
+            currentUser.getFollows().add(userToFollow);
+            userRepository.save(currentUser);
+        }
+        return currentUser;
+    }
+
+    public User unfollowUser(String userToFollowId) {
+        User currentUser = getCurrentUser();
+        User userToFollow = findById(userToFollowId);
+        if (userToFollow != null) {
+            currentUser.getFollows().remove(userToFollow);
+            userRepository.save(currentUser);
+        }
+        return currentUser;
+    }
+
     public User save(User user) {
         return userRepository.save(user);
     }
