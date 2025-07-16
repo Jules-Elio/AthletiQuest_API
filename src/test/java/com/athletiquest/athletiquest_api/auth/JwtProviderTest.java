@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
-class JwtTokenProviderTest {
+class JwtProviderTest {
 
 
     @Test
