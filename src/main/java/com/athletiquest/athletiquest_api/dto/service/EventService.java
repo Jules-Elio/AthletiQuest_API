@@ -1,6 +1,7 @@
 package com.athletiquest.athletiquest_api.dto.service;
 
 import com.athletiquest.athletiquest_api.dto.entity.Event;
+import com.athletiquest.athletiquest_api.dto.entity.User;
 import com.athletiquest.athletiquest_api.dto.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class EventService {
         return eventRepository.findWithinDistance(longitude, latitude, radius);
     }
 
+    public List<Event> findAllByOwner(User author) {
+        return eventRepository.findByOwner(author);
+    }
+
     public Event save(Event event) {
         return eventRepository.save(event);
     }
@@ -46,5 +51,10 @@ public class EventService {
 
     public void delete(Long id) {
         eventRepository.deleteById(id);
+    }
+
+    public boolean isFromCurrentUser(Long id) {
+        Event post = findById(id);
+        return post.getOwner().equals(userService.getCurrentUser());
     }
 }
