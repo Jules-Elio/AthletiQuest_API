@@ -15,7 +15,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findByOwner(User owner);
 
-    @Query(value = "SELECT * FROM event WHERE ST_DWithin(event.coordinates, ST_SetSRID(ST_MakePoint(?1, ?2), 4326), ?3) ",
+    @Query(value = "SELECT * FROM event WHERE ST_DWithin(coordinates, ST_SetSRID(ST_MakePoint(?1, ?2), 4326), ?3)",
            nativeQuery = true)
     List<Event> findWithinDistance(double longitude, double latitude, double radius);
 }
