@@ -2,6 +2,7 @@ package com.athletiquest.athletiquest_api.controller;
 
 import com.athletiquest.athletiquest_api.dto.entity.Event;
 import com.athletiquest.athletiquest_api.dto.service.EventService;
+import com.athletiquest.athletiquest_api.dto.service.UserService;
 import com.athletiquest.athletiquest_api.utils.EventsRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ public class EventController {
 
 
     private final EventService service;
+    private final UserService userService;
 
 
     @GetMapping()
@@ -92,6 +94,42 @@ public class EventController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Event>> getPostsOfUser(@PathVariable String userId) {
+        List<Event> result;
+        try {
+            result = service.findAllByOwner(userService.findById(userId));
+        } catch (Exception _) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/currentUser")
+    public ResponseEntity<List<Event>> getPostsCurrentUser() {
+        List<Event> result;
+        try {
+            result = service.findAllByOwner(userService.getCurrentUser());
+        } catch (Exception _) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/currentUser/{eventId}")
+    public ResponseEntity<String> deletePostCurrentUser(@PathVariable Long eventId) {
+        try {
+            if (service.isFromCurrentUser(eventId)) {
+                service.delete(eventId);
+            } else {
+                return new ResponseEntity<>("You can't delete this event", HttpStatus.FORBIDDEN);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
