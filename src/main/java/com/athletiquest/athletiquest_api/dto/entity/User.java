@@ -42,4 +42,7 @@ public class User {
 
     @ManyToMany
     private Set<User> follows = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Achievement> achievements = new HashSet<>();
 }
