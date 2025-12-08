@@ -3,7 +3,6 @@ package com.athletiquest.athletiquest_api.auth;
 import com.athletiquest.athletiquest_api.enums.RoleType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -35,11 +34,12 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorize -> {
-            authorize.requestMatchers("/stadiums/retrieve", "/stadiums/updates").hasAuthority(ADMIN);
-            authorize.requestMatchers("/login", "/register", "/stadiums", "/stadiums/*", "/events").permitAll();
-            authorize.requestMatchers("/*/current", "/*/currentUser/").hasAnyAuthority(ADMIN, USER);
-            authorize.requestMatchers(HttpMethod.DELETE).hasAuthority(ADMIN);
-            authorize.anyRequest().hasAnyAuthority(ADMIN, USER);
+//            authorize.requestMatchers("/stadiums/retrieve", "/stadiums/updates").hasAuthority(ADMIN);
+//            authorize.requestMatchers("/login", "/register", "/stadiums", "/stadiums/*", "/events").permitAll();
+//            authorize.requestMatchers("/*/current", "/*/currentUser/").hasAnyAuthority(ADMIN, USER);
+//            authorize.requestMatchers(HttpMethod.DELETE).hasAuthority(ADMIN);
+//            authorize.anyRequest().hasAnyAuthority(ADMIN, USER);
+            authorize.anyRequest().permitAll();
         }).httpBasic(Customizer.withDefaults());
 
         http.exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint));

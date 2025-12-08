@@ -35,6 +35,10 @@ public class EventService {
         return eventRepository.findByOwner(author);
     }
 
+    public List<Event> findAllBySignedInUser(User participant) {
+        return eventRepository.findAllByParticipantsContaining(participant);
+    }
+
     public Event save(Event event) {
         return eventRepository.save(event);
     }
@@ -54,7 +58,7 @@ public class EventService {
     }
 
     public boolean isFromCurrentUser(Long id) {
-        Event post = findById(id);
-        return post.getOwner().equals(userService.getCurrentUser());
+        Event event = findById(id);
+        return event.getOwner().equals(userService.getCurrentUser());
     }
 }

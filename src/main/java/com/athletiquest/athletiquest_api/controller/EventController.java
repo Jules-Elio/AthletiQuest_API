@@ -97,7 +97,7 @@ public class EventController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Event>> getPostsOfUser(@PathVariable String userId) {
+    public ResponseEntity<List<Event>> getEventsOfUser(@PathVariable String userId) {
         List<Event> result;
         try {
             result = service.findAllByOwner(userService.findById(userId));
@@ -107,8 +107,19 @@ public class EventController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/{userId}/signedin")
+    public ResponseEntity<List<Event>> getSingedInEventsOfUser(@PathVariable String userId) {
+        List<Event> result;
+        try {
+            result = service.findAllBySignedInUser(userService.findById(userId));
+        } catch (Exception _) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @GetMapping("/currentUser")
-    public ResponseEntity<List<Event>> getPostsCurrentUser() {
+    public ResponseEntity<List<Event>> getEventsCurrentUser() {
         List<Event> result;
         try {
             result = service.findAllByOwner(userService.getCurrentUser());
@@ -118,8 +129,19 @@ public class EventController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/currentUser/signedin")
+    public ResponseEntity<List<Event>> getSingedInEventsCurrentUser() {
+        List<Event> result;
+        try {
+            result = service.findAllBySignedInUser(userService.getCurrentUser());
+        } catch (Exception _) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @DeleteMapping("/currentUser/{eventId}")
-    public ResponseEntity<String> deletePostCurrentUser(@PathVariable Long eventId) {
+    public ResponseEntity<String> deleteEventsCurrentUser(@PathVariable Long eventId) {
         try {
             if (service.isFromCurrentUser(eventId)) {
                 service.delete(eventId);

@@ -67,26 +67,31 @@ public class StadiumService {
         return stadiumRepository.findAll();
     }
 
+    public List<Stadium> findLimitedTo(int limit) {
+        return stadiumRepository.findAll().stream().limit(limit).toList();
+    }
+
     public List<Stadium> findByCriterias(StadiumsRequest request) {
         List<Stadium> stadiumListResult;
-        String regexReadyPostalCode = "^" + request.getPostalCode();
-        if (request.validCoordinates()) {
+        if (request.validCoordinates() && !request.isNamedLocationSearch()) {
             stadiumListResult = stadiumRepository.findByCriteriasAndCoordinates(
                     request.getName(),
                     request.getDescription(),
                     request.getFreeAccess(),
-                    request.getCity(),
-                    regexReadyPostalCode,
                     request.getLatitude(),
                     request.getLongitude(),
-                    request.validRadius() ? request.getSearchRadius() : 5000);
+                    request.validRadius() ? request.getSearchRadius() : 50000);
         } else {
+            String regexReadyPostalCode = "^" + request.getPostalCode();
             stadiumListResult = stadiumRepository.findByCriterias(
                     request.getName(),
                     request.getDescription(),
                     request.getFreeAccess(),
                     request.getCity(),
                     regexReadyPostalCode);
+        }
+        if (request.getResultsLimit() > 0 && stadiumListResult.size() > request.getResultsLimit()) {
+            stadiumListResult = stadiumListResult.subList(0, request.getResultsLimit());
         }
         return stadiumListResult;
     }
