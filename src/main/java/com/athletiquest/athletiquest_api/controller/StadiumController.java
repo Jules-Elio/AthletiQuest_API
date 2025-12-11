@@ -16,18 +16,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/stadiums")
 @RequiredArgsConstructor
+@CrossOrigin
 public class StadiumController {
 
     private final StadiumService service;
     private final StadiumsUpdateService updateService;
 
-    @GetMapping()
+    @PostMapping()
     public ResponseEntity<StadiumsResponse> getStadiums(@RequestBody StadiumsRequest stadiumsRequest) {
         StadiumsResponse response = new StadiumsResponse();
         try {
             if (stadiumsRequest.isEmpty()) {
-                response.setStadiums(service.findAll());
-            } else {
+                if (stadiumsRequest.isLimited()){
+                    response.setStadiums(service.findLimitedTo(stadiumsRequest.getResultsLimit()));
+                }
+                else {
+                    response.setStadiums(service.findAll());
+                }
+            }
+            else {
                 response.setStadiums(service.findByCriterias(stadiumsRequest));
             }
         } catch (Exception _) {

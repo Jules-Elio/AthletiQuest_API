@@ -8,18 +8,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class StadiumsRequest {
-    private String name;
-    private String description;
-    private String freeAccess;
-    private String city;
-    private String postalCode;
+    private String name = "";
+    private String description = "";
+    private String freeAccess = "";
+    private String city = "";
+    private String postalCode = "";
 
     private Double latitude;
     private Double longitude;
     private Double searchRadius;
 
+    private int resultsLimit;
+
     public boolean validCoordinates() {
         return latitude != null && !latitude.isNaN() && longitude != null && !longitude.isNaN();
+    }
+
+    public boolean isNamedLocationSearch() {
+        return !(city == null || city.isEmpty()) || !(postalCode == null || postalCode.isEmpty());
     }
 
     public boolean validRadius() {
@@ -33,5 +39,9 @@ public class StadiumsRequest {
                (city == null || city.isEmpty()) &&
                (postalCode == null || postalCode.isEmpty()) &&
                !validCoordinates();
+    }
+
+    public boolean isLimited() {
+        return resultsLimit > 0;
     }
 }

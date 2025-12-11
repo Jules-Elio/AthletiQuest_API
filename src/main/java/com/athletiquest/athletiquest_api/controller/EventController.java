@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,19 +21,21 @@ public class EventController {
     private final UserService userService;
 
 
-    @GetMapping()
+    @PostMapping()
     public ResponseEntity<List<Event>> getEvents(@RequestBody EventsRequest request) {
         List<Event> result;
         try {
-            if (request.isEmpty()) {
-                result = service.findAll();
-            } else if (request.validCoordinates()) {
+            if (request.getStartDate() != null) {
+                result = service.findAllAfterDate(request.getStartDate());
+            }
+            else if (request.validCoordinates()) {
                 result = service.searchByLocation(
                         request.getLongitude(),
                         request.getLatitude(),
                         request.validRadius() ? request.getSearchRadius() : 5000);
-            } else {
-                result = new ArrayList<>();
+            }
+            else {
+                result = service.findAll();
             }
         } catch (Exception _) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -97,7 +98,7 @@ public class EventController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Event>> getPostsOfUser(@PathVariable String userId) {
+    public ResponseEntity<List<Event>> getEventsOfUser(@PathVariable String userId) {
         List<Event> result;
         try {
             result = service.findAllByOwner(userService.findById(userId));
@@ -107,8 +108,19 @@ public class EventController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/{userId}/signedin")
+    public ResponseEntity<List<Event>> getSingedInEventsOfUser(@PathVariable String userId) {
+        List<Event> result;
+        try {
+            result = service.findAllBySignedInUser(userService.findById(userId));
+        } catch (Exception _) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @GetMapping("/currentUser")
-    public ResponseEntity<List<Event>> getPostsCurrentUser() {
+    public ResponseEntity<List<Event>> getEventsCurrentUser() {
         List<Event> result;
         try {
             result = service.findAllByOwner(userService.getCurrentUser());
@@ -118,8 +130,19 @@ public class EventController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/currentUser/signedin")
+    public ResponseEntity<List<Event>> getSingedInEventsCurrentUser() {
+        List<Event> result;
+        try {
+            result = service.findAllBySignedInUser(userService.getCurrentUser());
+        } catch (Exception _) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @DeleteMapping("/currentUser/{eventId}")
-    public ResponseEntity<String> deletePostCurrentUser(@PathVariable Long eventId) {
+    public ResponseEntity<String> deleteEventsCurrentUser(@PathVariable Long eventId) {
         try {
             if (service.isFromCurrentUser(eventId)) {
                 service.delete(eventId);

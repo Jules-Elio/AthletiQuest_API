@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -15,7 +16,19 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findByOwner(User owner);
 
+    List<Event> findAllByParticipantsContaining(User participant);
+
+    List<Event> findAllByStartDateAfter(Date startDate);
+
+    List<Event> findAllByStartDateAfterAndParticipantsContaining(Date startDateAfter, User participant);
+
     @Query(value = "SELECT * FROM event WHERE ST_DWithin(coordinates, ST_SetSRID(ST_MakePoint(?1, ?2), 4326), ?3)",
            nativeQuery = true)
     List<Event> findWithinDistance(double longitude, double latitude, double radius);
+
+    List<Event> findAllByStartDateGreaterThanEqual(Date startDateIsGreaterThan);
+
+    List<Event> findAllByStartDateGreaterThanEqualOrderByStartDate(Date startDateIsGreaterThan);
+
+    List<Event> findAllByStartDateGreaterThanEqualAndParticipantsContainingOrderByStartDate(Date startDateAfter, User participant);
 }

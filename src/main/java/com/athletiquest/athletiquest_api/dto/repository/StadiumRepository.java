@@ -34,21 +34,14 @@ public interface StadiumRepository extends MongoRepository<Stadium, String> {
                   { $or: [ { name: { $regex: ?0, $options: "i" } }, { name: {$exists: false}} ]},
                   { $or: [ { description: { $regex: ?1, $options: "i" } }, { description: {$exists: false}} ] },
                   { $or: [ { freeAccess: { $regex: ?2, $options: "i" } }, { freeAccess: {$exists: false}} ] },
-                  { $or: [ { city: { $regex: ?3, $options: "i" } }, { city: {$exists: false}} ] },
-                  { $or: [
-                    { $or: [ { postalCode: { $regex: ?4, $options: "i" } }, { postalCode: {$exists: false}} ], },
-                    { $or: [ { codeInsee: { $regex: ?4, $options: "i" } }, { codeInsee: {$exists: false}} ], }
-                  ]},
-                  { coordinates: { $near: { $geometry: { type: 'Point', coordinates: [?6, ?5] }, $maxDistance: ?7 } } }
-              ]
+                  { coordinates: { $near: { $geometry: { type: 'Point', coordinates: [?4, ?3] }, $maxDistance: ?5 } } }
+              ],
             }
             """)
     List<Stadium> findByCriteriasAndCoordinates(
             String name,
             String description,
             String freeAccess,
-            String city,
-            String postalCode,
             double latitude,
             double longitude,
             double maxDistance
