@@ -16,7 +16,7 @@ public class Statistic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private Integer nbEvents;
     private Time totalTime;

@@ -6,6 +6,9 @@ import com.athletiquest.athletiquest_api.dto.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +20,10 @@ public class EventService {
 
     public List<Event> findAll() {
         return eventRepository.findAll();
+    }
+
+    public List<Event> findAllAfterDate(Date date) {
+        return eventRepository.findAllByStartDateGreaterThanEqualOrderByStartDate(date);
     }
 
     public Event findById(Long id) {
@@ -36,7 +43,11 @@ public class EventService {
     }
 
     public List<Event> findAllBySignedInUser(User participant) {
-        return eventRepository.findAllByParticipantsContaining(participant);
+        LocalDate date = LocalDate.now();
+        Date today = Date.from(
+                date.atStartOfDay(ZoneId.systemDefault()).toInstant()
+        );
+        return eventRepository.findAllByStartDateGreaterThanEqualAndParticipantsContainingOrderByStartDate(today, participant);
     }
 
     public Event save(Event event) {

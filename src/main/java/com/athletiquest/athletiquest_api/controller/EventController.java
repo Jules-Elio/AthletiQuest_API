@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,19 +21,21 @@ public class EventController {
     private final UserService userService;
 
 
-    @GetMapping()
+    @PostMapping()
     public ResponseEntity<List<Event>> getEvents(@RequestBody EventsRequest request) {
         List<Event> result;
         try {
-            if (request.isEmpty()) {
-                result = service.findAll();
-            } else if (request.validCoordinates()) {
+            if (request.getStartDate() != null) {
+                result = service.findAllAfterDate(request.getStartDate());
+            }
+            else if (request.validCoordinates()) {
                 result = service.searchByLocation(
                         request.getLongitude(),
                         request.getLatitude(),
                         request.validRadius() ? request.getSearchRadius() : 5000);
-            } else {
-                result = new ArrayList<>();
+            }
+            else {
+                result = service.findAll();
             }
         } catch (Exception _) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
